@@ -12,6 +12,24 @@ $(window).scroll(function(){
   }
 });
 
+const sections = document.querySelectorAll('section') 
+// const sectionsOffsetTop = []
+sections.forEach((section,index) => {
+  if (index === 0) {
+    section.style.opacity = '1';
+  }
+})
+
+window.addEventListener("scroll", (event) => {
+  let scroll = this.scrollY;
+  sections.forEach((section) => {
+    if (scroll + 500 > section.offsetTop) {
+      section.style.opacity = '1';
+    }
+  })
+});
+
+
 
 var swiper = new Swiper(".testimonialSwiper", {
   navigation: {
