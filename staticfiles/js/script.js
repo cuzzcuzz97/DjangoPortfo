@@ -14,8 +14,11 @@ $(window).scroll(function(){
 
 const sections = document.querySelectorAll('section') 
 // const sectionsOffsetTop = []
+const bodyHeight = document.body.scrollHeight;
+console.log(`Body height is: ${bodyHeight}px`);
+
 sections.forEach((section,index) => {
-  if (index === 0) {
+  if (index === 0 || bodyHeight < 1500) {
     section.style.opacity = '1';
   }
 })
