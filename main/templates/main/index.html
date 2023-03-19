@@ -42,8 +42,8 @@ Start Content
         </div>
         <div class="col-md">
           <div class="bannerContent">
-            <h1 class="xlTitle pb-3">Hi, I'm {{me.first_name|title}}, <br> a {{me.userprofile.title}} </br></h1>
-            <p>{{me.userprofile.bio}}</p>
+            <h1 id="headingIntro" class=" xlTitle pb-3">Hi, I'm {{me.first_name|title}}, <br> a {{me.userprofile.title}} </br></h1>
+            <p id="subheadingIntro" class="">{{me.userprofile.bio}}</p>
             <div class="bannerBtnCol">
               <div class="row">
                 <div class="col-auto">
@@ -60,12 +60,44 @@ Start Content
     </div>
   </div>
 </section>
+<script>
+function addTransition (){
+    const textIntro = document.querySelector('#headingIntro')
+    const subtextIntro = document.querySelector('#subheadingIntro')
+    const textReplace = textIntro.textContent;
+    const subtextReplace = subtextIntro.textContent;
+    textIntro.textContent = '';
+    subtextIntro.textContent = '';
+    let textAnimation = '';
+    let subtextAnimation = '';
+    [...textReplace].forEach((letter,index) => {
+      setTimeout(() => {
+        textAnimation+= letter
+        textIntro.textContent = textAnimation
+    }, index * 50);
+    });
+    setTimeout(() => {
+      [...subtextReplace].forEach((letterx,i) => {
+      setTimeout(() => {
+        subtextAnimation+= letterx
+        subtextIntro.textContent = subtextAnimation
+    }, i * 10);
+    
+    }
+    )
+    }, 2000)
 
+    
+  }
+
+  addTransition()
+
+</script>
 <section>
   <div class="sectionSpace pt-0">
     <div class="container">
-      <div class="row">
-        <div class="col-md-auto">
+      <div class="row skill-container">
+        <div class="col-md-auto skill-firstchild">
           <div class="keySkillCol">
             <h4 class="smTitle pb-3">Key Skills</h4>
             {% for sk in me.userprofile.skills.all %}
@@ -97,7 +129,7 @@ Start Content
                     </div>
                   </div>
                   <div class="col-auto">
-                    <span class="pLbl">{{sk.score}}%</span>
+                    <span class="pLbl countpercent">0%</span>
                   </div>
                 </div>
               </div>
@@ -110,6 +142,72 @@ Start Content
       </div>
     </div>
   </div>
+  <script>
+    const progressBars = document.querySelectorAll('.progress-bar')
+    
+    const countpercent = document.querySelectorAll('.countpercent')
+    let listBarsWidth = []
+    let listBarsNumberPercent = []
+    const containerSkill = document.querySelector('.skill-container')
+    const firstChildSkill = containerSkill.querySelector('.skill-firstchild')
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+    if (mediaQuery.matches) {
+      containerSkill.appendChild(firstChildSkill)
+
+} else {
+      console.log('Viewport is greater than 768px');
+}
+
+
+    progressBars.forEach((element) =>{
+      element.style.opacity = 0;
+    })
+
+    let scrollActive = false
+
+    window.addEventListener('scroll', function() {
+      scrollActive = true
+    })
+
+
+    function waitToExecute () {
+    // bar
+      progressBars.forEach((bar,index) => {
+      bar.style.opacity = '1'
+      listBarsNumberPercent.push(bar.getAttribute("aria-valuenow"))
+      listBarsWidth.push(bar.offsetWidth)
+      for (let index = 0; index < bar.offsetWidth; index++) {
+        setTimeout(() => {
+          bar.style.width = index + 'px'
+        }, index * 10);
+      }
+      bar.width
+    })
+    // percent
+      setTimeout(() => {
+      countpercent.forEach((number,i) => {
+        for (let index = 0; index <= listBarsNumberPercent[i]; index++) {
+          setTimeout(() => {
+            number.textContent = index + '%'
+        }, index * (35+i));
+        }
+    })  
+    }, 1000);
+    }
+    function watchScrollActive() {
+      let previousValue = scrollActive;
+      setInterval(function() {
+        if (previousValue !== scrollActive) {
+          waitToExecute()
+          previousValue = scrollActive;
+        }
+      }, 100); // check every 100ms
+    }
+
+    watchScrollActive();
+    
+  </script>
 </section>
 
 <section>

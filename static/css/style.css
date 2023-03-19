@@ -107,6 +107,8 @@ a, .btn {
 }
 .smTitle {
   font-size: 22px;
+  font-weight: 700 !important;
+  margin-top: 20px;
   line-height: normal;
   font-weight: var(--regular);
   font-family: var(--titleFont)
@@ -302,7 +304,7 @@ a, .btn {
 	padding-top: 10px;
 }
 .keySkillCard + .keySkillCard {
-  padding-top: 25px;
+  /* padding-top: 25px; */
 }
 .keySkillCol {
   width: 300px;
@@ -312,6 +314,7 @@ a, .btn {
   width: 50px;
   text-align: right;
 }
+
 
 .progress.progressStyle {
 	height: 8px;
@@ -369,6 +372,11 @@ a, .btn {
 .sliderOuter {
   position: relative;
 }
+
+.transition-smooth {
+  transition: all 0.5s ease;
+}
+
 .sliderOuter .swiper-button-next.swiperBtnStyle {
   right: -50px;
 }
@@ -593,7 +601,7 @@ body.navToggleActive {
   	font-size: 18px;
   }
   .keySkillCard + .keySkillCard {
-  	padding-top: 20px;
+  	/* padding-top: 20px; */
   }
   .keySkillCol {
   	width: 250px;
@@ -768,6 +776,7 @@ body.navToggleActive {
   	font-size: 14px;
   }
 }
+
 
 input[type=text], input[type=email], select, textarea {
   width: 100%;
