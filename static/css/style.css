@@ -599,6 +599,8 @@ body.navToggleActive {
   }
   .smTitle {
   	font-size: 18px;
+    font-weight: 700 !important;
+    margin-top: 20px;
   }
   .keySkillCard + .keySkillCard {
   	/* padding-top: 20px; */
