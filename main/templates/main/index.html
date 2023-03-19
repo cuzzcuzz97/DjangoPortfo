@@ -74,7 +74,7 @@ function addTransition (){
       setTimeout(() => {
         textAnimation+= letter
         textIntro.textContent = textAnimation
-    }, index * 50);
+    }, index * 40);
     });
     setTimeout(() => {
       [...subtextReplace].forEach((letterx,i) => {
@@ -85,7 +85,7 @@ function addTransition (){
     
     }
     )
-    }, 2000)
+    }, 1500)
 
     
   }
@@ -259,7 +259,8 @@ function addTransition (){
   const certiPreviewsImages = document.querySelectorAll(".certiPreview");
   const sectionSpaceSm = document.querySelector('.sectionSpaceSm')
   // Attach a mousemove event listener to each certificate preview element
-  certiPreviews.forEach((ceti,index) => {
+    if (!mediaQuery.matches) {
+      certiPreviews.forEach((ceti,index) => {
     ceti.addEventListener("mousemove", function(event) {
       ceti.style.position = 'relative';
       const tooltip = certiPreviewsImages[index]
@@ -286,6 +287,8 @@ function addTransition (){
       tooltip.style.display = "none";
     });
   });
+    }
+  
   </script>
 </section>
 
