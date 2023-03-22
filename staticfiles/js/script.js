@@ -17,6 +17,12 @@ const sections = document.querySelectorAll('section')
 const bodyHeight = document.body.scrollHeight;
 console.log(`Body height is: ${bodyHeight}px`);
 
+const animationBox = document.querySelectorAll('.portfolioCard')
+animationBox.forEach((item) => {
+  console.log(item)
+  item.style.top = '2000px';
+})
+
 sections.forEach((section,index) => {
   if (index === 0 || bodyHeight < 1500) {
     section.style.opacity = '1';
@@ -24,14 +30,21 @@ sections.forEach((section,index) => {
 })
 
 window.addEventListener("scroll", (event) => {
+  const cardAnimation1 = document.querySelectorAll('.portfolioCard')
   let scroll = this.scrollY;
   sections.forEach((section) => {
     if (scroll + 500 > section.offsetTop) {
       section.style.opacity = '1';
+      if (section.id === 'portfolio') {
+        cardAnimation1.forEach((card,index) => {
+          setTimeout(() => {
+            card.style.top = '0';
+          }, index * 500);
+        })
+      }
     }
   })
 });
-
 
 
 var swiper = new Swiper(".testimonialSwiper", {

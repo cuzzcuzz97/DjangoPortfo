@@ -437,9 +437,11 @@ section {
   margin-bottom: 0;
 }
 .portfolioImgCol img {
-  border-radius: 6px;
+  width: 100%;
+  height: 250px;
+  /* border-radius: 6px;
   width: 246px;
-  height: 184px;
+  height: 184px; */
   -o-object-fit: cover;
   object-fit: cover;
 }
@@ -762,6 +764,9 @@ body.navToggleActive {
 }
 
 @media(max-width:575px) {
+  .portfolioCard {
+    flex: 100% !important;
+  }
   .sliderOuter .swiper-button-prev.swiperBtnStyle ,
   .sliderOuter .swiper-button-next.swiperBtnStyle {
     display: none;

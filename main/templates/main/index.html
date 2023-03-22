@@ -32,6 +32,41 @@ Start Content
 ================================= -->
 {% block content %}
 <section>
+  <style>
+    .download_dropdown {
+      display: flex;
+      position: relative;
+      top: 0;
+      left: 0;
+      height: 0;
+      opacity: 0;
+      transition: all 0.5s ease-in-out;
+      overflow: hidden;
+      flex-direction: column;
+    }
+    .download_dropdown a:hover {
+      background-color: black;
+      color: white !important;
+    }
+
+    .fa-arrow-right {
+      transition: all 1s ease;
+    }
+    .knowmore-btn:active > .fa-arrow-right{
+      transform: rotate(calc(90deg + 360deg));
+      color: white;
+    }
+    
+    .knowmore-btn:hover > .fa-arrow-right {
+      transform: rotate(calc(90deg + 360deg));
+      color: white;
+    }
+
+    .bannerSection {
+      margin-bottom: 4rem;
+    }
+    
+  </style>
   <div class="bannerSection">
     <div class="container">
       <div class="row g-4 g-md-3  align-items-center">
@@ -47,10 +82,17 @@ Start Content
             <div class="bannerBtnCol">
               <div class="row">
                 <div class="col-auto">
-                  <a download href="{{me.userprofile.cv.url}}" class="btn btnPrimary">Download Resume</a>
+                  <button class="btn btnPrimary btnDownload">Download Resume</button>
+                  <div class="download_dropdown">
+                    <a download href="{{me.userprofile.cv.url}}" class="btn btn-light text-dark">English</a>
+                    <a download href="{{me.userprofile.cv_vietnamese.url}}" class="btn btn-light text-dark">Vietnamese</a>
+                  </div>
                 </div>
                 <div class="col-auto">
                   <a href="{% url 'main:contact' %}" class="btn btnOutline">Contact</a>
+                </div>
+                <div  class="col-auto">
+                  <a href="#skills" class="btn btn-outline-info knowmore-btn">Know more <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
               </div>
             </div>
@@ -61,6 +103,15 @@ Start Content
   </div>
 </section>
 <script>
+
+    const resumes = document.querySelector('.download_dropdown')
+    const downloadBtn = document.querySelector('.btnDownload')
+
+    downloadBtn.addEventListener("mousemove", () => {
+      resumes.style.height = '100px';
+      resumes.style.opacity = 1;
+    })
+
 function addTransition (){
     const textIntro = document.querySelector('#headingIntro')
     const subtextIntro = document.querySelector('#subheadingIntro')
@@ -81,7 +132,7 @@ function addTransition (){
       setTimeout(() => {
         subtextAnimation+= letterx
         subtextIntro.textContent = subtextAnimation
-    }, i * 10);
+    }, i * 5);
     
     }
     )
@@ -93,7 +144,8 @@ function addTransition (){
   addTransition()
 
 </script>
-<section>
+<hr>
+<section id="skills">
   <div class="sectionSpace pt-0">
     <div class="container">
       <div class="row skill-container">
@@ -288,11 +340,70 @@ function addTransition (){
     });
   });
     }
-  
+
   </script>
 </section>
 
-<section>
+<section id="portfolio">
+  <style>
+    .portfolioCardContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .portfolioCard {
+      flex: 0 0 49%;
+      position: relative;
+      transition: all 2s ease;
+    }
+
+    .portfolioCardItem {
+      transition: all 0.5s ease-in-out;
+
+    }
+
+    .portfolioCard:hover > .portfolioCardItem  {
+      color: black;
+      background-color: #b5b5b5;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .portfolioCard:hover > .hidden-btn {
+      opacity: 1;
+    }
+
+    .hidden-btn {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(100%);
+      z-index: 3;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .openDetailBtn {
+      border: 2px solid rgb(240, 4, 4);
+      padding: 10px 20px;
+      width: 100px;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
+    }
+    .openDetailBtn:hover {
+      border: 2px solid rgb(255, 255, 255);
+      background-color: red;
+      color: white;
+      transform: scale(1.2);
+
+    }
+
+  </style>
   <div class="sectionSpace">
     <div class="container">
       <div class="portfolioCol">
@@ -304,16 +415,18 @@ function addTransition (){
             <a href="{% url 'main:portfolios' %}" class="simpleLink">View all</a>
           </div>
         </div>
+
+        <div class="portfolioCardContainer">
         {% for p in portfolio %}
         {% if p.is_active %}
         <div class="portfolioCard">
-          <div class="row g-4 align-items-center">
+          <div class="portfolioCardItem">
             <div class="col-md-auto">
               <div class="portfolioImgCol">
                 <a href="{% url 'main:portfolio' slug=p.slug %}"><img src="{{p.image.url}}" alt="..."></a>
               </div>
             </div>
-            <div class="col-md">
+            <!-- <div class="col-md">
               <div class="portfolioContentCol">
                 <h4 class="lgTitle"><a href="{% url 'main:portfolio' slug=p.slug %}">{{p.name}}</a></h4>
                 <ul class="portfolioOption">
@@ -321,12 +434,19 @@ function addTransition (){
                 </ul>
                 <p>{{p.description}}</p>
               </div>
+            </div> -->
+          </div>
+          <div class="hidden-btn">
+            <div>
+              <h4 class="lgTitle">{{p.name}}</h4>
             </div>
+            <!--  -->
+            <div class="openDetailBtn" onclick="window.location.href='{% url 'main:portfolio' slug=p.slug %}'"><a>DETAIL</a></div>
           </div>
         </div>
         {% endif %}
         {% endfor %}
-        
+      </div>
       </div>
       <div class="testimonialCol">
         <h4 class="smText regular d-block">Testimonials</h4>
@@ -366,6 +486,8 @@ function addTransition (){
     </div>
   </div>
 </section>
+
+
 
 <section>
   <div class="sectionSpaceSm lightBg">
