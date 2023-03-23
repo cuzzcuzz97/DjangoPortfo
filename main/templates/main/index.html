@@ -149,7 +149,7 @@ function addTransition (){
   <div class="sectionSpace pt-0">
     <div class="container">
       <div class="row skill-container">
-        <div class="col-md-auto skill-firstchild">
+        <!-- <div class="col-md-auto skill-firstchild">
           <div class="keySkillCol">
             <h4 class="smTitle pb-3">Key Skills</h4>
             {% for sk in me.userprofile.skills.all %}
@@ -165,7 +165,7 @@ function addTransition (){
             {% endif %}
             {% endfor %}
           </div>
-        </div>
+        </div> -->
         <div class="col-md">
           <h4 class="smTitle pb-3">Coding Skills</h4>
           <div class="progressCol">
@@ -208,7 +208,7 @@ function addTransition (){
       containerSkill.appendChild(firstChildSkill)
 
 } else {
-      console.log('Viewport is greater than 768px');
+      // console.log('Viewport is greater than 768px');
 }
 
 
@@ -219,6 +219,9 @@ function addTransition (){
     let scrollActive = false
 
     window.addEventListener('scroll', function() {
+      const bodyscroll  = document.body.scrollTop
+      console.log(bodyscroll)
+      // if (document.querySelector('#skills').offsetHeight)
       scrollActive = true
     })
 
@@ -232,7 +235,7 @@ function addTransition (){
       for (let index = 0; index < bar.offsetWidth; index++) {
         setTimeout(() => {
           bar.style.width = index + 'px'
-        }, index * 10);
+        }, index * 5);
       }
       bar.width
     })
@@ -267,10 +270,8 @@ function addTransition (){
     <div class="container">
       <div class="row pb-3">
         <div class="col">
-          <h4 class="smText regular">Certificates</h4>
+          <h4 class="smText regular">Certificates & works</h4>
         </div>
-
-
       </div>
       <div class="sliderOuter">
         <div class="swiper certificatesSlider">
@@ -441,7 +442,7 @@ function addTransition (){
               <h4 class="lgTitle">{{p.name}}</h4>
             </div>
             <!--  -->
-            <div class="openDetailBtn" onclick="window.location.href='{% url 'main:portfolio' slug=p.slug %}'"><a>DETAIL</a></div>
+            <div class="openDetailBtn" ><a onclick="window.location.href='{% url 'main:portfolio' slug=p.slug %}'">DETAIL</a></div>
           </div>
         </div>
         {% endif %}
