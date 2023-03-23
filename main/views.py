@@ -6,7 +6,8 @@ from .models import (
 		Portfolio,
 		Testimonial,
 		Certificate,
-        Skill
+        Skill,
+		Images
 	)
 from django.views import generic
 from .forms import ContactForm
@@ -22,8 +23,10 @@ class IndexView(generic.TemplateView):
 		certificates = Certificate.objects.filter(is_active=True)
 		blogs = Blog.objects.filter(is_active=True)
 		portfolio = Portfolio.objects.filter(is_active=True).order_by('-date')
+		images = Images.objects.all()
 		
 		context["testimonials"] = testimonials
+		context["imagesaboutme"] = images
 		context["certificates"] = certificates
 		context["blogs"] = blogs
 		context["portfolio"] = portfolio

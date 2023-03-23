@@ -208,7 +208,6 @@ function addTransition (){
       containerSkill.appendChild(firstChildSkill)
 
 } else {
-      // console.log('Viewport is greater than 768px');
 }
 
 
@@ -217,12 +216,13 @@ function addTransition (){
     })
 
     let scrollActive = false
+    let bodyscroll = 0;
 
     window.addEventListener('scroll', function() {
-      const bodyscroll  = document.body.scrollTop
-      console.log(bodyscroll)
-      // if (document.querySelector('#skills').offsetHeight)
-      scrollActive = true
+      const bodyscroll  = this.scrollY
+      if (document.querySelector('#skills').offsetHeight) {
+        scrollActive = true
+      }
     })
 
 
@@ -265,6 +265,111 @@ function addTransition (){
   </script>
 </section>
 
+<section class="aboutMe">
+  <style>
+    .aboutMe {
+      height: 100%;
+    }
+    .aboutMeContainer {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+    }
+
+    .AboutMeIllustration {
+      position: relative;
+    }
+    .AboutMeIllustration-image {
+      position: absolute;
+      transition: all 1s ease;
+      height: 300px;
+      width: 200px;
+      top: 0;
+      left: 0;
+    }
+
+    .AboutMeIllustration-image img{
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    .AboutMeText {
+      flex: 0 0 65%;
+      padding-right: 1rem;
+    }
+    .AboutMeIllustration-container {
+      position: relative;
+      height: 300px;
+      width: 200px;
+    }
+    .AboutMeText p{
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      font-size: 20px;
+      line-height: 2rem;
+    }
+
+    .emphrasisP {
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    @media screen and (max-width:756px) {
+      .aboutMe {
+        height: 100%;
+      }
+
+      .AboutMeIllustration-container{
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+      .AboutMeIllustration-image {
+        height: 210px;
+        width: 140px;
+      }
+
+      .AboutMeIllustration-image {
+        position: relative;
+      }
+    }
+  </style>
+  <div class="container">
+    <h4 class="smTitle pb-3">
+      More about me!
+    </h4>
+    <div class="aboutMeContainer">
+      <div class="AboutMeText">
+        <p>
+          Hello, I'm Cuong, a 26-year-old self-taught full-stack developer with a diverse professional background. Before venturing into coding, I worked as <span class="emphrasisP">a country manager, community manager, salesperson, and tour guide.</span>
+        </p>
+        <p>
+          With expertise in<span class="emphrasisP"> customer care, sales, technical support, and project management, I'm a detail-oriented and driven professional</span>. As a skilled communicator, quick learner, and strategic thinker, I have experience in building customer relationships and assisting them in selecting suitable products and services.
+        </p>
+        <p>
+          I'm excited to introduce my portfolio website that showcases my skills and projects. As a passionate music and sports enthusiast, I'm always eager to learn new things, and my projects reflect my interests. I've built a<span class="emphrasisP">  Tourism website using Python Django called Ngheanreview.asia, an English learning web app using JavaScript and ReactJS, a landing page using CSS, and Bootstrap.</span>
+        </p>
+        <p>
+          I'm currently seeking opportunities and take responsibility for the Vietnam region. If you're interested in learning more about my work or exploring potential collaborations, please check out some projects below.
+        </p>
+      </div>
+      <div>
+      <div class="AboutMeIllustration-container">
+        {% for img in imagesaboutme %}
+          <div class="AboutMeIllustration-image">
+            <img src="{{img.image.url}}" alt="{{img.title}}">
+          </div>
+          {%endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="sectionSpaceSm lightBg">
     <div class="container">
@@ -296,7 +401,6 @@ function addTransition (){
             </div>
             {% endif %}
             {% endfor %}
-            
           </div>
         </div>            
         <div class="cert-swiper-button-next swiper-button-next swiperBtnStyle"></div>
@@ -304,8 +408,68 @@ function addTransition (){
         <div class="swiper-pagination swiperPaginationStyle posInitial"></div>
       </div>
     </div>
+    
   </div>
+<script>
 
+ if (!mediaQuery.matches) {
+  let ActiveAutoChange = true
+  window.addEventListener('scroll', function() {
+    const IllustrationImage = document.querySelectorAll('.AboutMeIllustration-image')
+    const IllustrationContainer = document.querySelector('.AboutMeIllustration-container')
+    const position = IllustrationContainer.getBoundingClientRect().top + window.pageYOffset;
+    const bodyscroll  = this.scrollY
+    function changeInDex(index) {
+      IllustrationImage.forEach((img, i) => {
+          if (i === index) {
+            img.style.zIndex = '5';
+            img.style.opacity = '1';
+          } else {
+            img.style.zIndex = '1';
+            img.style.opacity = '0.3';
+          }
+        });
+    }
+    let loopId = null
+      if (bodyscroll > position - 500) {
+        if (ActiveAutoChange === true){
+          AutoChangeIndex()
+          ActiveAutoChange = false
+        }
+    function AutoChangeIndex(){
+      let indexInfinityLoop = -1
+      loopId = setInterval(() => {
+          indexInfinityLoop += 1
+        if (indexInfinityLoop > IllustrationImage.length - 1) {
+          indexInfinityLoop = 0
+        }
+        changeInDex(indexInfinityLoop)
+      }, 2000);
+      }
+      
+
+      IllustrationImage.forEach((image,index) => {
+      image.addEventListener('mouseover',() => {
+        changeInDex(index)
+        clearInterval(loopId);
+      })
+      image.addEventListener('mouseout',() => {
+        AutoChangeIndex()
+      })
+
+      const changeValue = index * -1 * 30
+      if (index % 2 === 0){
+        image.style.transform = `translate(${changeValue + 80}px,${-changeValue + 160}px)`
+      } else {
+        image.style.transform = `translate(${-changeValue + 80}px,${changeValue  + 160}px)`
+      }
+  })
+    }
+})
+ }
+ 
+
+</script>
   <script>
   // Get all the certificate preview elements
   const certiPreviews = document.querySelectorAll(".swiper-slide");

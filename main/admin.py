@@ -7,10 +7,14 @@ from . models import (
     Portfolio,
     Blog,
     Certificate,
-    Skill
+    Skill,
+    Images
     )
 
-
+@admin.register(Images)
+class ImagesAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
 	list_display = ('id', 'user')

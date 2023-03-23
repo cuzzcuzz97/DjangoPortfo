@@ -48,7 +48,12 @@ class ContactProfile(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+class Images(models.Model):
+    title = models.CharField(max_length=200, blank=True, null=True)
+    image = models.FileField(blank=True, null=True, upload_to="images")
 
+    def __str__(self):
+        return self.title
 
 class Testimonial(models.Model):
 

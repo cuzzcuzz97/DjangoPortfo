@@ -556,6 +556,7 @@ body.navToggleActive {
   .swiper-pagination {
     display: none;
   }
+
 }
 @media (min-width:992px) {
   .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
@@ -660,6 +661,9 @@ body.navToggleActive {
 }
 
 @media (max-width:767px) {
+  .aboutMeContainer {
+    flex-direction: column !important;
+  }
   .navCollapseCol {
     position: fixed;
     top: 0;
