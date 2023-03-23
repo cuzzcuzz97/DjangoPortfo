@@ -15,11 +15,9 @@ $(window).scroll(function(){
 const sections = document.querySelectorAll('section') 
 // const sectionsOffsetTop = []
 const bodyHeight = document.body.scrollHeight;
-console.log(`Body height is: ${bodyHeight}px`);
 
 const animationBox = document.querySelectorAll('.portfolioCard')
 animationBox.forEach((item) => {
-  console.log(item)
   item.style.top = '2000px';
 })
 
